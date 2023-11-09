@@ -1,8 +1,14 @@
 #!/bin/bash
 
-# Input parameters
-ANDROID_VERSION=$1
-PACKAGE_LIST=$2
+# Assign arguments to variables
+GIT_USER_NAME=$1
+GIT_USER_EMAIL=$2
+ANDROID_VERSION=$3
+PACKAGE_LIST=$4
 
-# Execute the nikgapps command with the provided arguments
+# Configure git with the provided username and email
+git config --global user.name "$GIT_USER_NAME"
+git config --global user.email "$GIT_USER_EMAIL"
+
+# Now run nikgapps with the provided Android version and package list
 nikgapps -A "$ANDROID_VERSION" -P "$PACKAGE_LIST"

@@ -31,9 +31,6 @@ jobs:
     - name: Run Docker image with Git config and script execution
       run: |
         docker run --rm \
-        -e GIT_USER_NAME='${{ secrets.GIT_USER_NAME }}' \
-        -e GIT_USER_EMAIL='${{ secrets.GIT_USER_EMAIL }}' \
-        -e ANDROID_VERSION='${{ github.event.inputs.android_version }}' \
-        -e PACKAGE_LIST='${{ github.event.inputs.package_list }}' \
         ghcr.io/nikgapps/docker:latest \
-        /bin/bash -c "git config --global user.name \"\$GIT_USER_NAME\" && git config --global user.email \"\$GIT_USER_EMAIL\" && /path/to/script.sh '\$ANDROID_VERSION' '\$PACKAGE_LIST'"
+        "${{ secrets.GIT_USER_NAME }}" "${{ secrets.GIT_USER_EMAIL }}" "${{ github.event.inputs.android_version }}" "${{ github.event.inputs.package_list }}"
+  
