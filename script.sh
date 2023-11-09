@@ -10,5 +10,6 @@ PACKAGE_LIST=$4
 git config --global user.name "$GIT_USER_NAME"
 git config --global user.email "$GIT_USER_EMAIL"
 
+echo "nikgapps -A $ANDROID_VERSION -P $PACKAGE_LIST"
 # Now run nikgapps with the provided Android version and package list
 nikgapps -A $ANDROID_VERSION -P $PACKAGE_LIST
