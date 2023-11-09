@@ -1,5 +1,4 @@
-# Using a base image with Python already installed
-FROM python:3.9-slim
+FROM ubuntu:latest
 
 # Install system dependencies
 RUN apt-get update && \
