@@ -1,18 +1,32 @@
-name: Run Docker Image
+name: Run Docker Image with Git Config and NikGapps Command
 
 on:
-    workflow_dispatch:
+  workflow_dispatch:
+    inputs:
+      android_version:
+        description: 'Android Version'
+        required: true
+      package_list:
+        description: 'Package List'
+        required: true
 
 jobs:
-  run-image:
+  build-and-run:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
-      
+
     - name: Pull latest Docker image
       run: docker pull ghcr.io/nikgapps/docker:latest
-      
-    - name: Run Docker image
-      run: docker run --rm ghcr.io/nikgapps/docker:latest 13 core,basic
+
+    - name: Run Docker image with Git config and script execution
+      run: |
+        docker run --rm \
+        -e GIT_USER_NAME='${{ secrets.GIT_USER_NAME }}' \
+        -e GIT_USER_EMAIL='${{ secrets.GIT_USER_EMAIL }}' \
+        -e ANDROID_VERSION='${{ github.event.inputs.android_version }}' \
+        -e PACKAGE_LIST='${{ github.event.inputs.package_list }}' \
+        ghcr.io/nikgapps/docker:latest \
+        /bin/bash -c "git config --global user.name \"\$GIT_USER_NAME\" && git config --global user.email \"\$GIT_USER_EMAIL\" && /path/to/script.sh \$ANDROID_VERSION \$PACKAGE_LIST"
