@@ -36,4 +36,4 @@ jobs:
         -e ANDROID_VERSION='${{ github.event.inputs.android_version }}' \
         -e PACKAGE_LIST='${{ github.event.inputs.package_list }}' \
         ghcr.io/nikgapps/docker:latest \
-        /bin/bash -c "git config --global user.name \"\$GIT_USER_NAME\" && git config --global user.email \"\$GIT_USER_EMAIL\" && /path/to/script.sh \$ANDROID_VERSION \$PACKAGE_LIST"
+        /bin/bash -c "git config --global user.name \"\$GIT_USER_NAME\" && git config --global user.email \"\$GIT_USER_EMAIL\" && /path/to/script.sh '\$ANDROID_VERSION' '\$PACKAGE_LIST'"
