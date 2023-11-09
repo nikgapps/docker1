@@ -11,7 +11,7 @@ RUN apt-get update && \
 WORKDIR /usr/src/nikgapps
 
 # Install NikGapps from PyPI
-RUN pip install NikGapps
+RUN python3 -m pip install NikGapps
 
 # Copy the script.sh into the container
 COPY script.sh /usr/src/nikgapps
