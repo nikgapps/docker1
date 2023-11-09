@@ -3,7 +3,7 @@ FROM ubuntu:latest
 # Install system dependencies
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    aapt gcc python3-dev git git-lfs openjdk-8-jdk apktool dialog && \
+    python3 python3-pip aapt gcc python3-dev git git-lfs openjdk-8-jdk apktool dialog && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
