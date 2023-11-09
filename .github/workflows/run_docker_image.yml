@@ -1,4 +1,4 @@
-name: Run Docker Image with Git Config and NikGapps Command
+name: Build NikGapps
 
 on:
   workflow_dispatch:
