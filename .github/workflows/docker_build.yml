@@ -2,13 +2,20 @@ name: Build and Push Docker Image
 
 on:
     workflow_dispatch:
-    push:
-        branches:
-        - main  # Trigger the workflow on push events to the 'main' branch
-        paths:
-        - '**.py'
-        - 'requirements.txt'
-        - 'Dockerfile'
+      inputs:
+        android_version:
+          description: 'Android Version'
+          required: true
+        package_list:
+          description: 'Package List'
+          required: true
+    # push:
+    #     branches:
+    #     - main  # Trigger the workflow on push events to the 'main' branch
+    #     paths:
+    #     - '**.py'
+    #     - 'requirements.txt'
+    #     - 'Dockerfile'
 
 env:
   REGISTRY: ghcr.io
@@ -47,9 +54,12 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-        platforms: linux/amd64,linux/arm64
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+
+    - name: Output Docker Image URL
+      run: |
+        echo ${{ steps.meta.outputs.tags }}
+        echo ${{ steps.meta.outputs.labels }}
+      
   test:
     runs-on: ubuntu-latest
 
@@ -67,11 +77,11 @@ jobs:
         password: ${{ secrets.AUTH }}
 
     - name: Pull latest Docker image
-      run: docker pull ghcr.io/nikgapps/docker:latest
+      run: docker pull ghcr.io/nikgapps/docker:main
 
     - name: Run Docker image with Git config and script execution
       run: |
         docker run --rm \
-        ghcr.io/nikgapps/docker:latest \
+        ghcr.io/nikgapps/docker:main \
         "${{ secrets.GIT_USER_NAME }}" "${{ secrets.GIT_USER_EMAIL }}" "${{ github.event.inputs.android_version }}" "${{ github.event.inputs.package_list }}"
   
